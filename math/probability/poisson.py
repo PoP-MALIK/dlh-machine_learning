@@ -1,11 +1,26 @@
 #!/usr/bin/env python3
-"""Poisson distribution"""
+"""Module for Poisson distribution"""
 
 
 class Poisson:
-    """Represents a Poisson distribution"""
+    """Represents a Poisson distribution
+
+    Attributes:
+        lambtha (float): Expected number of occurrences in a given time frame
+    """
 
     def __init__(self, data=None, lambtha=1.):
+        """Initializes a Poisson distribution
+
+        Args:
+            data (list): Data to estimate the distribution from
+            lambtha (float): Expected number of occurrences in a given time frame
+
+        Raises:
+            ValueError: If lambtha is not a positive value
+            TypeError: If data is not a list
+            ValueError: If data does not contain multiple values
+        """
         if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
