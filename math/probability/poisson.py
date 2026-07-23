@@ -6,15 +6,19 @@ class Poisson:
     """Represents a Poisson distribution
 
     Attributes:
-        lambtha (float): Expected number of occurrences in a given time frame
+        lambtha (float): Expected number of occurrences in a given
+            time frame
     """
+
+    e = 2.7182818285
 
     def __init__(self, data=None, lambtha=1.):
         """Initializes a Poisson distribution
+
         Args:
             data (list): Data to estimate the distribution from
             lambtha (float): Expected number of occurrences in a given
-        time frame
+                time frame
 
         Raises:
             ValueError: If lambtha is not a positive value
@@ -31,3 +35,20 @@ class Poisson:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = float(sum(data) / len(data))
+
+    def pmf(self, k):
+        """Calculates the PMF value for a given number of successes
+
+        Args:
+            k (int): Number of successes
+
+        Returns:
+            float: PMF value for k, or 0 if k is out of range
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+        factorial = 1
+        for i in range(1, k + 1):
+            factorial *= i
+        return (self.e ** -self.lambtha) * (self.lambtha ** k) / factorial
