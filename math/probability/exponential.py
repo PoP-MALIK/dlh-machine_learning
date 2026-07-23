@@ -10,6 +10,8 @@ class Exponential:
             time frame
     """
 
+    e = 2.7182818285
+
     def __init__(self, data=None, lambtha=1.):
         """Initializes an Exponential distribution
 
@@ -33,3 +35,16 @@ class Exponential:
             if len(data) < 2:
                 raise ValueError("data must contain multiple values")
             self.lambtha = float(1 / (sum(data) / len(data)))
+
+    def pdf(self, x):
+        """Calculates the PDF value for a given time period
+
+        Args:
+            x (float): Time period
+
+        Returns:
+            float: PDF value for x, or 0 if x is out of range
+        """
+        if x < 0:
+            return 0
+        return self.lambtha * (self.e ** (-self.lambtha * x))
