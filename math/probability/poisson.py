@@ -11,10 +11,10 @@ class Poisson:
 
     def __init__(self, data=None, lambtha=1.):
         """Initializes a Poisson distribution
-
         Args:
             data (list): Data to estimate the distribution from
-            lambtha (float): Expected number of occurrences in a given time frame
+            lambtha (float): Expected number of occurrences in a given
+        time frame
 
         Raises:
             ValueError: If lambtha is not a positive value
