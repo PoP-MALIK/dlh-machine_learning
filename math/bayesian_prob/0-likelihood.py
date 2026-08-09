@@ -38,4 +38,4 @@ def likelihood(x, n, P):
         factorial_nx *= i
     coefficient = factorial_n // (factorial_x * factorial_nx)
 
-    return coefficient * (P ** x) * ((1 - P) ** (n - x))
+    return np.array(coefficient * (P ** x) * ((1 - P) ** (n - x)))
