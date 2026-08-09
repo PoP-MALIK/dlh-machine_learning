@@ -21,3 +21,26 @@ class MultiNormal:
         self.mean = np.sum(data, axis=1, keepdims=True) / n
         deviation = data - self.mean
         self.cov = (deviation @ deviation.T) / (n - 1)
+
+    def pdf(self, x):
+        """Calculates the PDF at a data point.
+
+        Args:
+            x (numpy.ndarray): shape (d, 1) containing the data point
+
+        Returns:
+            float: value of the PDF at x
+        """
+        if not isinstance(x, np.ndarray):
+            raise TypeError('x must be a numpy.ndarray')
+        d = self.mean.shape[0]
+        if x.shape != (d, 1):
+            raise ValueError('x must have the shape ({}, 1)'.format(d))
+
+        pi = 3.1415926536
+        det = np.linalg.det(self.cov)
+        inv = np.linalg.inv(self.cov)
+        coefficient = 1 / np.sqrt(((2 * pi) ** d) * det)
+        diff = x - self.mean
+        exponent = -0.5 * (diff.T @ inv @ diff)
+        return float(coefficient * np.exp(exponent))
