@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def rename(df):
-    """Renames Timestamp to Datetime, converts values, returns Datetime and Close.
+    """Renames Timestamp to Datetime and returns Datetime and Close.
 
     Args:
         df (pd.DataFrame): DataFrame containing a Timestamp column

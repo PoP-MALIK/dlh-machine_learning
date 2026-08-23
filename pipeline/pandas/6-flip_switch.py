@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Sorts a pd.DataFrame in reverse order and transposes it."""
-import pandas as pd
 
 
 def flip_switch(df):

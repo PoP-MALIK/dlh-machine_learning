@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """Converts last 10 rows of High and Close columns to numpy.ndarray."""
-import pandas as pd
 
 
 def array(df):
-    """Selects last 10 rows of High and Close and converts to numpy.ndarray.
+    """Selects last 10 rows of High and Close and converts to ndarray.
 
     Args:
         df (pd.DataFrame): DataFrame containing High and Close columns
