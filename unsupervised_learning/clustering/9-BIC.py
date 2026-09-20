@@ -10,11 +10,13 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if not isinstance(X, np.ndarray) or X.ndim != 2:
         return None, None, None, None
     n, d = X.shape
-    if not isinstance(kmin, int) or kmin <= 0:
+    if not isinstance(kmin, int) or kmin <= 0 or kmin > n:
         return None, None, None, None
     if kmax is None:
         kmax = n
-    if not isinstance(kmax, int) or kmax <= 0 or kmax < kmin:
+    if not isinstance(kmax, int) or kmax <= 0 or kmax > n:
+        return None, None, None, None
+    if kmax < kmin:
         return None, None, None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None, None, None
@@ -26,14 +28,20 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     logs = []
     bics = []
     results = []
-    for k in range(kmin, kmax + 1):
-        pi, m, S, g, likelihood = expectation_maximization(
-            X, k, iterations, tol, verbose)
-        p = (k * d * (d + 1) / 2) + (d * k) + (k - 1)
-        bic = p * np.log(n) - 2 * likelihood
-        logs.append(likelihood)
-        bics.append(bic)
-        results.append((pi, m, S))
+    try:
+        for k in range(kmin, kmax + 1):
+            pi, m, S, g, likelihood = expectation_maximization(
+                X, k, iterations, tol, verbose)
+            if pi is None or m is None or S is None or likelihood is None:
+                return None, None, None, None
+            p = (k * d * (d + 1) / 2) + (d * k) + (k - 1)
+            bic = p * np.log(n) - 2 * likelihood
+            logs.append(likelihood)
+            bics.append(bic)
+            results.append((pi, m, S))
+    except Exception:
+        return None, None, None, None
+
     logs = np.array(logs)
     bics = np.array(bics)
     best = np.argmin(bics)
